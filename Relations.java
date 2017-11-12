@@ -62,8 +62,8 @@ public class Relations {
         boolean[][] T = new boolean [n1][n2];
         for (int i = 0; i < n1; i++){
           for (int j = 0; j < n2; j++){
-            if (R[i][j] == S[i][j]){
-              T[i][j] = R[i][j];
+            if (R[i][j] || S[i][j]){
+              T[i][j] = true;
             }
           }
         }
@@ -74,8 +74,7 @@ public class Relations {
         int n = R.length;
         boolean[][] T = R;
         if (R[0].length != n) throw new UnsupportedOperationException("expecting an n by n boolean array!");
-        boolean[][] Rplus = new boolean[n][n];
-        for (int i = 1; i <= n; i ++){
+        for (int i = 1; i < n; i ++){
           T = union(T,compose(R,T));
         }
         return T;
@@ -86,13 +85,15 @@ public class Relations {
      */
     public static class Warshall {
         // you should probably initialize some private fields here (e.g., W_k and k)
+        private static int k;
+        private static boolean[][] W_k;
 
         /**
          * Initialize W_0 with relation R by making a *copy* of R.
          * @param R relation with which to initialize Warshall relation.
          */
         public Warshall(boolean[][] R) {
-            throw new UnsupportedOperationException("implement me!");
+            boolean[][] W_0 = R;
         }
 
         /**
@@ -146,9 +147,15 @@ public class Relations {
       String test = Arrays.toString(compose(R,S));
       System.out.print("R: "); System.out.println(Arrays.deepToString(R));
       System.out.print("S: "); System.out.println(Arrays.deepToString(S));
-      System.out.print("compose (R,S): "); System.out.println(Arrays.deepToString(compose(R,S)));
-      System.out.print("Union (R,S): "); System.out.println(Arrays.deepToString(union(R,S)));
-      System.out.print("Union (R,T): "); System.out.println(Arrays.deepToString(union(R,T)));
+      System.out.print("compose (R,S): ");
+        System.out.println(Arrays.deepToString(compose(R,S)));
+      System.out.print("Union (R,S): ");
+        System.out.println(Arrays.deepToString(union(R,S)));
+      System.out.print("Union (R,T): ");
+        System.out.println(Arrays.deepToString(union(R,T)));
+      System.out.print("Transitive Closure (inefecient): ");
+      System.out.println(Arrays.deepToString(transitiveClosure(R)));
+
     }
 
 }
